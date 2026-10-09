@@ -1,0 +1,29 @@
+name: Build macOS VST3/AU
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch: # Permet de lancer le build manuellement
+
+jobs:
+  build-macos:
+    runs-on: macos-26 # Utilise la dernière version de macOS sur GitHub
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure CMake
+        run: cmake -B build -G Xcode -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --config Release --parallel
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: BassDistortion-macOS
+          path: |
+            build/BassDistortion_artefacts/Release/VST3/Bass Distortion.vst3
+            build/BassDistortion_artefacts/Release/AU/Bass Distortion.component
