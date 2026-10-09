@@ -1,42 +1,44 @@
 cmake_minimum_required(VERSION 3.22)
-project(BassDistortion VERSION 1.0.0)
+project(BassFeedDistortion VERSION 1.0.0)
 
+# Force une cible de déploiement compatible avec l'API disponible
+set(CMAKE_OSX_DEPLOYMENT_TARGET "14.0" CACHE STRING "Minimum macOS version")
 set(CMAKE_CXX_STANDARD 17)
 
 include(FetchContent)
 FetchContent_Declare(
     JUCE
     GIT_REPOSITORY https://github.com/juce-framework/JUCE.git
-    GIT_TAG        7.0.12
+    GIT_TAG        develop # <-- Utilise la branche develop pour le correctif
 )
 FetchContent_MakeAvailable(JUCE)
 
-juce_add_plugin(BassDistortion
+juce_add_plugin(BassFeedDistortion
     COMPANY_NAME      "TonNom"
     IS_SYNTH          FALSE
     NEEDS_MIDI_INPUT  FALSE
     NEEDS_MIDI_OUTPUT FALSE
     IS_MIDI_EFFECT    FALSE
     EDITOR_WANTS_KEYBOARD_FOCUS FALSE
-    COPY_PLUGIN_AFTER_BUILD TRUE
+    COPY_PLUGIN_AFTER_BUILD FALSE
     PLUGIN_MANUFACTURER_CODE Tnnm
     PLUGIN_CODE        Bds1
     FORMATS           VST3 AU Standalone
-    PRODUCT_NAME      "Bass Distortion"
+    PRODUCT_NAME      "Bass Feed Distortion"
 )
 
-target_sources(BassDistortion PRIVATE
+target_sources(BassFeedDistortion PRIVATE
     Source/PluginProcessor.cpp
     Source/PluginEditor.cpp
 )
 
-target_compile_definitions(BassDistortion PUBLIC
+target_compile_definitions(BassFeedDistortion PUBLIC
     JUCE_WEB_BROWSER=0
     JUCE_USE_CURL=0
     JUCE_VST3_CAN_REPLACE_VST2=0
 )
 
-target_link_libraries(BassDistortion PRIVATE
+target_link_libraries(BassFeedDistortion PRIVATE
     juce::juce_audio_utils
     juce::juce_dsp
 PUBLIC
