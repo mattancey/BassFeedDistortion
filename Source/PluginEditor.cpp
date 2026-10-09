@@ -23,7 +23,7 @@ BassDistortionProcessorEditor::BassDistortionProcessorEditor(BassDistortionProce
     addAndMakeVisible(qLabel);
 
     // Bandes
-    for (int i = 0; i < 5; ++i)
+    for (size_t i = 0; i < 5; ++i)
     {
         setupRotary(bandSliders[i], bandLabels[i],
                     juce::String(BASE_FREQS_EDITOR[i], 0) + " Hz");
@@ -59,7 +59,7 @@ BassDistortionProcessorEditor::BassDistortionProcessorEditor(BassDistortionProce
     freqAtt  = std::make_unique<SliderAttachment>(processorRef.apvts, "freqOffset", freqOffsetSlider);
     qAtt     = std::make_unique<SliderAttachment>(processorRef.apvts, "qFactor", qSlider);
 
-    for (int i = 0; i < 5; ++i)
+    for (size_t i = 0; i < 5; ++i)
         bandAtts[i] = std::make_unique<SliderAttachment>(
             processorRef.apvts, "band" + juce::String(i) + "Gain", bandSliders[i]);
 
@@ -107,7 +107,7 @@ void BassDistortionProcessorEditor::resized()
 
     // --- Ligne 2 : Bandes ---
     auto row2 = area.removeFromTop(cellH);
-    for (int i = 0; i < 5; ++i)
+    for (size_t i = 0; i < 5; ++i)
     {
         auto cell = row2.removeFromLeft(cellW);
         bandSliders[i].setBounds(cell.withSizeKeepingCentre(sliderSize, sliderSize));
