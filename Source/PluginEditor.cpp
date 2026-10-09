@@ -1,5 +1,6 @@
 #include "PluginEditor.h"
-
+// Fréquences de base (identiques à celles du processeur)
+static constexpr float BASE_FREQS_EDITOR[5] = { 40.0f, 60.0f, 90.0f, 135.0f, 202.0f };
 BassDistortionProcessorEditor::BassDistortionProcessorEditor(BassDistortionProcessor& p)
     : AudioProcessorEditor(&p), processorRef(p)
 {
@@ -25,7 +26,7 @@ BassDistortionProcessorEditor::BassDistortionProcessorEditor(BassDistortionProce
     for (int i = 0; i < 5; ++i)
     {
         setupRotary(bandSliders[i], bandLabels[i],
-                    juce::String(BassDistortionProcessor::BASE_FREQS[i], 0) + " Hz");
+                    juce::String(BASE_FREQS_EDITOR[i], 0) + " Hz");
         addAndMakeVisible(bandSliders[i]);
         addAndMakeVisible(bandLabels[i]);
     }
